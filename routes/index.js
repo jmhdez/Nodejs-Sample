@@ -1,42 +1,53 @@
 var _ = require('underscore');
 
-var people = [
+// TODO: This shoul be read from a database
+var heroes = [
   { 
-    name: 'Lucas', 
-    notes: ['Juega a la petanca', 'Le gusta el atún'] 
+    name: 'Chuck Norris', 
+    facts: [
+      'No existe la teoría de la evolución, tan sólo una lista de las' +
+      ' especies que Chuck Norris permite vivir. ', 
+      'Chuck Norris no te pisa un pie, sino el cuello.',
+      'Chuck Norris borró la papelera de reciclaje.'] 
   },
   {
-    name: 'Hortensia',
-    notes: ['Es jardinera', 'Tiene un gato', 'Habla alto']
+    name: 'Bruce Scheneier',
+    facts: [
+      'Science is defined as mankinds futile attempt at learning ' +
+      'Bruce Schneiers private key.', 
+      'Others test numbers to see whether they are prime. Bruce ' +
+      'decides whether a number is prime.']
+  },
+  {
+    name: 'Arturo Pérez-Reverte',
+    facts: [
+      'Pérez-Reverte se baja música en casa de Ramoncín.', 
+      'Pérez-Reverte no necesita investigar para escribir novela ' +
+      'histórica, el pasado cambia conforme teclea en la máquina.']
   }
 ];
 
 
-/*
- * GET home page.
- */
-
 exports.index = function(req, res) {
-  var names = people.map(function(p) { return p.name; });
-  res.render('index', { title: 'My Friends', names: names })
+  var names = heroes.map(function(p) { return p.name; });
+  res.render('index', { heroes: names })
 };
 
-exports.person = function(req, res) {
-  var notes = _(people).detect(function (p) { 
+exports.hero = function(req, res) {
+  var facts = _(heroes).detect(function (p) { 
     return p.name == req.params.name;
-  }).notes;
-  res.json(notes);
+  }).facts;
+  res.json(facts);
 }
 
-exports.addNote = function(req, res) {
-  var data = req.body;
-  var person = _(people).detect(function(p) {
-    return p.name == data.name;
+exports.addFact = function(req, res) {
+  var hero = _(heroes).detect(function(p) {
+    return p.name == req.body.name;
   });
   
-  person.notes.push(data.note);
+  hero.facts.push(req.body.fact);
   
-  console.log('New note for ' + person.name + ': ' + data.note);
+  console.log('New fact for ' + hero.name + ': ' + req.body.fact);
   
   res.json({status: 'ok' });
 }

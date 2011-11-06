@@ -1,57 +1,60 @@
-h1 My Friends
-ul#people
-  each name in names
-    li(class='person')
-      a(id='person-#{name}', href='#') #{name}
-#person
-  h2 name of the selected person
-  input#txtNewNote(type='text')
-  a#addNote(href='#') Add Note
-  ul#notes
+#left-column.column
+  h2 Elige tu héroe
+  ul#heroes
+    each hero in heroes
+      li(class='hero-name')
+        a(href='#') #{hero}
+        
+#right-column.column
+  h2 Facts
+  ul#facts
+  label(for="new-fact") Añadir nuevo fact:
+  textarea#new-fact
+  a(id='add-new-fact', href='#') Añadir
 
 script(src="/javascripts/jquery-1.6.4.min.js")
 script
 
-  function addNote(note) {
-    $('<li>').appendTo('#notes').text(note);
+  function addFact(fact) {
+    $('<li>').appendTo('#facts').text(fact);
   }
 
   $(function() {
-    $('#person').hide();
+    $('#right-column').hide();
   
-    $('li.person a').click(function() {
+    $('li.hero-name a').click(function() {
     
       var name = $(this).text();
       
-      $('#person h2').text(name);
+      $('#right-column h2').text(name);
     
-      $('#notes li').remove();
+      $('#facts li').remove();
       
-      $.getJSON('/person/' + name, function(data) {
+      $.getJSON('/hero/' + name, function(data) {
         for (var i = 0; i < data.length; i++) {
-          addNote(data[i]);
+          addFact(data[i]);
         }
       });
       
-      $('#person').show();
+      $('#right-column').show();
       
       return false;
     });
     
-    $('#addNote').click(function() {
+    $('#add-new-fact').click(function() {
       
-      var name = $('#person h2').text();
-      var note = $('#txtNewNote').val();
+      var name = $('#right-column h2').text();
+      var fact = $('#new-fact').val();
     
       $.ajax({
         type: "POST",
-        url: "/person/addNote",
-        data: JSON.stringify({ name: name, note: note }),
+        url: "/hero/addFact",
+        data: JSON.stringify({ name: name, fact: fact }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function(data) {
-          addNote(note);
-          $('#txtNewNote').val('');
+          addFact(fact);
+          $('#new-fact').val('');
         },
         error: function(err) {
           var msg = 'Status: ' + err.status + ': ' + err.responseText;
