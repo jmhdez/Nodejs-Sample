@@ -8,5 +8,5 @@ This is just a sample app to play with:
 Disclaimer
 ----------
 
-This IS NOT intended to be a catalogue of best practices. This is just
+This *IS NOT* intended to be a catalogue of best practices. This is just
 a very simple sample plenty of room for improvement. 
