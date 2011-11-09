@@ -1,7 +1,3 @@
-function addFact(fact) {
-  $('<li>').appendTo('#facts').text(fact);
-}
-
 $(function() {
   $('#right-column').hide();
 
@@ -15,7 +11,7 @@ $(function() {
     
     $.getJSON('/hero/' + name, function(data) {
       for (var i = 0; i < data.length; i++) {
-        addFact(data[i]);
+        $('<li>').appendTo('#facts').text(data[i]);
       }
     });
     
