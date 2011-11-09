@@ -31,7 +31,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.get('/hero/:name', routes.hero);
-app.post('/hero/addFact', routes.addFact);
+app.post('/hero/add-fact', routes.addFact);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

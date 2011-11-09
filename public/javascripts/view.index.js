@@ -27,12 +27,12 @@ $(function() {
   
     $.ajax({
       type: "POST",
-      url: "/hero/addFact",
+      url: "/hero/add-fact",
       data: JSON.stringify({ name: name, fact: fact }),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function(data) {
-        addFact(fact);
+        $('<li>').appendTo('#facts').text(fact);
         $('#new-fact').val('');
       },
       error: function(err) {
