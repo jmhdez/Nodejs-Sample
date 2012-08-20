@@ -71,7 +71,12 @@ module.exports = {
         try {
           md = require('markdown-js');
         } catch (err) {
-          throw new Error('Cannot find markdown library, install markdown or discount');
+          try {
+            md = require('marked');
+          } catch (err) {
+            throw new
+              Error('Cannot find markdown library, install markdown, discount, or marked.');
+          }
         }
       }
     }
@@ -86,7 +91,7 @@ module.exports = {
 
   coffeescript: function(str){
     str = str.replace(/\\n/g, '\n');
-    var js = require('coffee-script').compile(str).replace(/\n/g, '\\n');
+    var js = require('coffee-script').compile(str).replace(/\\/g, '\\\\').replace(/\n/g, '\\n');
     return '<script type="text/javascript">\\n' + js + '</script>';
   }
 };
